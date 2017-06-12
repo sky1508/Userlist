@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en" data-framework="angularjs">
+	<head>
+		<meta charset="utf-8">
+		<link href="node_modules/css/bootstrap.min.css" rel="stylesheet">
+		<script src="node_modules/angular/angular.js"></script>
+		<script src="node_modules/angular-route/angular-route.js"></script>
+		<script src="js/app.js"></script>
+	</head>
+	<body ng-app="todomvc">
+		<center><h1>Userlist App</h1></center>
+		<ng-view />
+	<script type="text/ng-template" id="todomvc-index.html">
+	<div class="container">
+      <hr>
+      
+	  <button type="button" class="btn btn-info btn-lg pull-right" data-toggle="modal" data-target="#myModal">Add New</button>
+	   
+
+      <h2>All Users</h2>
+      <span class="clearfix"></span>
+      <hr>
+
+      <div class="alert alert-info" ng-if="message">
+       <a href="#" class="close" ng-click="clearMessage()">&times;</a>
+        {{message}}
+      </div>
+      
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Index</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat = "todo in todos">
+            <td>{{$index+1}}.</td>
+            <td>{{todo.username}}</td>
+            <td>{{todo.email}}</td>
+            <td>
+              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalEdit" ng-click="editTodo(todo)">Edit</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalDelete" ng-click="editTodo(todo)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">New User Registration</h4>
+        </div>
+        <div class="modal-body">
+          
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-sm-2">Username</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="newTodo.username">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2">Email</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="newTodo.email">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2">Full Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="newTodo.fullName">
+              </div>
+            </div>
+            
+            <div class="form-group"> 
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default" ng-click="addTodo()" data-dismiss="modal">Save</button>
+              </div>
+            </div>
+          </form>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModalEdit" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit this User</h4>
+        </div>
+        <div class="modal-body">
+          
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-sm-2">Username</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="editedTodo.username">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2">Email</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="editedTodo.email">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2">Full Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="editedTodo.fullName">
+              </div>
+            </div>
+            
+            <div class="form-group"> 
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default" ng-click="saveEdits(editedTodo)" data-dismiss="modal">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+	<div class="modal fade" id="myModalDelete" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Are You Sure?</h4>
+				</div>
+				<div class="modal-body">
+				  <strong style="color: red;">You are going to delete {{editedTodo.username}}.</strong>
+				</div>
+
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="removeTodo(editedTodo)">Yes</button>
+				  <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+				</div>
+			</div>  
+		</div>
+	</div>
+
+		</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="node_modules/bootstrap/bootstrap.min.js"></script>
+		<script src="js/controllers/todoCtrl.js"></script>
+		<script src="js/services/todoStorage.js"></script>
+	</body>
+</html>
